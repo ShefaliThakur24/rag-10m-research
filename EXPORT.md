@@ -8,6 +8,13 @@
 
 ## TL;DR — the pipeline
 
+![7-stage RAG production pipeline](doc/images/pipeline-7stage.png)
+
+Two paths converge at stage 5: an offline indexing path (ingest → chunk → embed → index) and an online query path (user query → retrieve → rerank → generate). Cite-or-refuse is the system-level guardrail that bounds hallucination.
+
+<details>
+<summary>Mermaid source (editable)</summary>
+
 ```mermaid
 flowchart LR
     docs[Documents 10M plus] --> ingest[1 ingest TBD]
@@ -20,6 +27,8 @@ flowchart LR
     rerank --> generate[7 generate plus cite-or-refuse]
     generate --> answer[Cited answer]
 ```
+
+</details>
 
 **The five decisions that buy you near-zero hallucination at 10M scale:**
 
@@ -108,6 +117,8 @@ The design treats these as variables and provides tradeoff guidance per stage:
 ## 6. Rerank
 
 **Recommendation:** A cross-encoder reranker (Cohere Rerank 3.5 / BGE-reranker-v2 / Voyage rerank-2 class) over the top-100 candidates from hybrid retrieval, returning top-N (typically 5-10) for generator context.
+
+![Cumulative reduction in RAG retrieval failure rate from layering contextual embeddings, contextual BM25, and reranking](doc/images/contextual-retrieval-ladder.png)
 
 **Rationale (with regimes):** Reranking provides the single largest delta in the Anthropic stack: adding a reranker to Contextual Embeddings + Contextual BM25 reduces top-20 retrieval failure rate from 2.9% to 1.9% (-67% vs baseline 5.7%, an additional -34% over hybrid alone — E-C-0003). Vendor benchmarks confirm a wide rerank moat on reasoning-heavy queries: Cohere Rerank 3.5 hits 81.59% retrieval accuracy on reasoning data vs BM25 43.53% / Dense 50.64% / Hybrid 48.80% (E-C-0004), and 62.18% nDCG@10 multilingual vs Dense 53.83% / Hybrid 52.10% across 18 languages (E-C-0005). The standard production architecture is BM25 (or hybrid) retrieves top-100 → rerank API → top-N (E-C-0008); the 100-candidate window balances rerank cost (per (query, candidate) pair) against the recall ceiling. Skip the reranker only when latency budget is < ~300ms hard, or when query distribution is overwhelmingly trivial single-hop lookups where hybrid already saturates recall. **Confidence: medium-high** — multiple independent vendor benchmarks converge; absolute numbers are vendor-self-published and warrant in-domain replication before commit to a specific reranker.
 
