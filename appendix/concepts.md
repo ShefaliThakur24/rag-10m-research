@@ -56,7 +56,7 @@ Anchors are alphabetical for findability. Synth/lanes append new entries here; f
 
 ## ragas
 
-(stub) Open-source eval framework for RAG: faithfulness, answer relevance, context precision, context recall metrics, computed by judge LLMs. Standard baseline; known to be judge-LLM-sensitive.
+Reference-free RAG eval framework. Faithfulness = |LLM-verified atomic statements| / |total statements| extracted from the answer; Answer Relevance = mean cos(q, q_i) over LLM-generated reverse questions; Context Relevance = fraction of context sentences flagged crucial. Aligns with human pairwise judgement at 0.95 / 0.78 / 0.70 on WikiEval using gpt-3.5-turbo-16k judge; ctx-relevance degrades on long contexts. Canonical: [arXiv:2309.15217](https://arxiv.org/abs/2309.15217) (S-C-0011, S-C-0012, S-C-0013).
 
 ## raptor
 
@@ -81,3 +81,31 @@ Anchors are alphabetical for findability. Synth/lanes append new entries here; f
 ---
 
 (synth appends new entries below in alphabetical order)
+
+## bm25
+
+(stub) Sparse lexical retrieval scoring: query-document score from term-frequency × inverse-document-frequency with length normalization. Fast (sub-100ms at TREC scale per S-C-0005), no training, strong baseline; misses paraphrase-heavy queries that dense embeddings catch.
+
+## cove
+
+(stub) Chain-of-Verification: generate a draft answer, draft verification questions about it, answer each independently against retrieved evidence, then rewrite. Reduces unsupported claims at the cost of multiple generator passes. Relevant when compositional reasoning bounds (S-C-0010) cap single-pass faithfulness.
+
+## hybrid-retrieval
+
+(stub) Combine sparse (BM25) and dense retrieval, fuse rankings (e.g. RRF). On TREC DL19, lifts nDCG@10 from 50.58 (BM25 alone) to 72.50 (S-C-0005). Standard 10M+ baseline; pays a ~3.2s/query latency vs ~0.07s for BM25 alone.
+
+## hyde
+
+(stub) Hypothetical Document Embeddings: ask an LLM to draft a hypothetical answer to the query, embed that, and use it as the retrieval vector. Lifts nDCG@10 by ~0.84 over hybrid alone on TREC DL19 but adds an LLM call per query (~11s vs ~3s — S-C-0005). Worth it only when latency-hidden or cached.
+
+## modular-rag
+
+(stub) Decomposes RAG into orchestrated modules (Search, Memory, Routing, Predict, Task-Adapter) with adaptive control flow rather than a fixed retrieve→rerank→generate sequence. Extends Naive/Advanced RAG to heterogeneous query workloads (S-C-0001).
+
+## piperag
+
+(stub) Algorithm-system co-design that pipelines periodic retrieval with generation by accepting a stale query window; the next retrieval starts before the current generation step finishes. Up to 2.6x latency speedup over Retro at iso-perplexity on a 200B-token C4 DB (S-C-0007). Applies to Retro-style cross-attention architectures, not one-shot chat-LLM RAG.
+
+## self-rag
+
+(stub) Self-Reflective RAG: generator emits special reflection tokens that decide when to retrieve, what to retrieve, and whether the draft is supported. Trades extra generation overhead for adaptive retrieval and self-verification. Relevant when single-pass generation fails the compositional bound (S-C-0010).
