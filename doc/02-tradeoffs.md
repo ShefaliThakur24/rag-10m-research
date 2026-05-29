@@ -47,13 +47,16 @@ One section per pipeline stage. Each section: a table of candidate approaches, t
 
 | Approach | Wins when | Loses when | Supporting claims | Confidence |
 |---|---|---|---|---|
-| _TBD_ | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-
-(No claims in this batch — see [synth/open-questions.md](../synth/open-questions.md).)
+| Cross-encoder rerank over top-100 → top-N (Cohere Rerank 3.5 / BGE-reranker-v2 / Voyage rerank-2) | hybrid retrieval bottlenecked on noise; reasoning-heavy queries (Cohere Rerank 3.5: 81.59% vs Hybrid 48.80%); multilingual (62.18% vs 52.10% nDCG@10); latency budget tolerates +100-500ms | latency budget < ~300ms hard; trivial single-hop lookups where hybrid already saturates recall | E-C-0003, E-C-0004, E-C-0005, E-C-0008 | medium |
+| Rerank-as-LLM-judge (pairwise / listwise LLM scoring) | top-K is small (< 20) and per-pair LLM cost is amortizable; need explicit rationale per ranking decision | top-100 candidates × per-pair LLM calls blows latency and cost budget | (gap — see [synth/open-questions.md](../synth/open-questions.md)) | low |
+| No reranker, hybrid only | latency budget < 200ms hard or rerank service is unavailable | recall floor on top-20 chunks > 95% required (hybrid alone leaves ~2.9% failure rate vs reranked 1.9% per E-C-0003) | E-C-0003 | medium |
+| Bigger top-K to generator instead of rerank | generator has long context and tolerates noise; rerank service unavailable | "lost in the middle" effect dominates; noise crowds out relevant context and increases hallucination risk | C-C-0002 | medium |
 
 ## generate
 
 | Approach | Wins when | Loses when | Supporting claims | Confidence |
 |---|---|---|---|---|
 | Single-prompt generation (generator chains facts internally) | single-hop / direct-lookup QA where retrieved chunks already contain the answer | multi-hop chains > ~3 hops or any numeric/logical composition (GPT-4 at 59% on 3x3 multiply; OOD depth fails near-zero) | S-C-0009, S-C-0010 | medium |
-| Explicit decomposition + per-step verification (Self-RAG / CoVe / external solver) | multi-hop chains ≥ 3 hops, numeric/logical compositions, faithfulness target ≥ 0.95 | single-hop where decomposition overhead isn't repaid — `<regime: ???>` | S-C-0010 | medium |
+| Explicit decomposition + per-step verification (Self-RAG / CoVe / external solver) | multi-hop chains ≥ 3 hops, numeric/logical compositions, faithfulness target ≥ 0.95 | single-hop where decomposition overhead isn't repaid; latency budget too tight for verify loops | S-C-0010 | medium |
+| Hard cite-or-refuse contract at validation layer | near-zero hallucination is a product requirement; chat UI can present refusal gracefully | best-effort search UIs where refusal is worse than a partial answer; high-stakes "must answer" workflows | C-C-0005 | medium |
+| Permissive generation, eval-only filter (LLM-judge faithfulness post-hoc) | offline batch generation where bad answers can be hand-filtered | online interactive RAG where bad answers reach users before the judge flags them | C-C-0005 | low |

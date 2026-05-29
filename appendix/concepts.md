@@ -20,7 +20,7 @@ Anchors are alphabetical for findability. Synth/lanes append new entries here; f
 
 ## contextual-retrieval
 
-(stub) Anthropic's technique: prepend an LLM-generated 50-100 token chunk-specific context summary to each chunk before embedding. Improves retrieval on snippet-level fragments at the cost of one extra LLM call per chunk at indexing time.
+Anthropic's technique: prepend an LLM-generated 50-100 token chunk-specific context summary to each chunk before embedding *and* before BM25 indexing. On internal eval, contextual embeddings alone cut top-20 retrieval failure rate 5.7%→3.7% (-35%); + contextual BM25 → 2.9% (-49%); + reranker → 1.9% (-67%). Indexing cost is one prompt-cacheable LLM call per chunk. Source: [anthropic.com/engineering/contextual-retrieval](https://www.anthropic.com/engineering/contextual-retrieval) (E-C-0001, E-C-0002, E-C-0003).
 
 ## factscore
 
@@ -86,6 +86,10 @@ Reference-free RAG eval framework. Faithfulness = |LLM-verified atomic statement
 
 (stub) Sparse lexical retrieval scoring: query-document score from term-frequency × inverse-document-frequency with length normalization. Fast (sub-100ms at TREC scale per S-C-0005), no training, strong baseline; misses paraphrase-heavy queries that dense embeddings catch.
 
+## cite-or-refuse
+
+A guardrail contract at the generator boundary: every claim in the answer must be backed by a citation to a retrieved chunk; missing citations or below-threshold retrieval confidence trigger refusal at the validation layer rather than allowing unsupported generation. Converts a known failure mode (confident hallucination) into a known refusal that the product layer can handle (C-C-0005). Applicable when refusal is gracefully presentable (chat UI); not when the product mandates "always answer".
+
 ## cove
 
 (stub) Chain-of-Verification: generate a draft answer, draft verification questions about it, answer each independently against retrieved evidence, then rewrite. Reduces unsupported claims at the cost of multiple generator passes. Relevant when compositional reasoning bounds (S-C-0010) cap single-pass faithfulness.
@@ -109,3 +113,15 @@ Reference-free RAG eval framework. Faithfulness = |LLM-verified atomic statement
 ## self-rag
 
 (stub) Self-Reflective RAG: generator emits special reflection tokens that decide when to retrieve, what to retrieve, and whether the draft is supported. Trades extra generation overhead for adaptive retrieval and self-verification. Relevant when single-pass generation fails the compositional bound (S-C-0010).
+
+## retriever-eval-antipattern
+
+End-to-end RAG eval lets the generator absorb retriever failures and hide them in green pass-rates for months. The fix: evaluate retrieval as a search problem (Recall@K, Precision@K, MRR) independent of generation, with held-out QA + gold-evidence labels. Heuristic thresholds: Recall@K < 0.5-0.6 → retriever is the bottleneck; Precision@K < 0.4 → retriever is adding too much noise (C-C-0002).
+
+## eval-driven-development
+
+Treat evaluation as the engineering control loop: baseline → hypothesize failure → experiment → measure → iterate. Build a custom domain-specific trace-viewing UI rather than relying on generic dashboards — this yields more eval insights per engineer-hour than any off-the-shelf tool (C-C-0003). Calibrate LLM-as-judge by measuring TPR/TNR against human-annotated samples before trusting judge-LLM aggregates (C-C-0004).
+
+## production-derived-eval
+
+Practitioner heuristic (Hamel Husain, via Lebensold): a 70% pass rate on evals derived from real production failures is more informative than 95% on a static gold benchmark. Implication: continuously refresh the eval set from production traces; treat high pass rates as a signal the test set is too easy, not as a goal (C-C-0001).
