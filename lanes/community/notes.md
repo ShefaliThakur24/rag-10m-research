@@ -23,3 +23,8 @@ v1 hung silently before any source/claim/commit was written (sources.jsonl and c
 ## Out-of-scope leads
 
 ## Open questions for synth
+
+## Manual sourcing tick by chat-agent at +73min
+- Eugene Yan eval-process, Hamel Husain field guide + evals-faq
+- Tianpan retriever-eval-antipattern (Recall@K/Precision@K thresholds)
+- Cite-or-refuse contract pattern
