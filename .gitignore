@@ -9,3 +9,9 @@ __pycache__/
 .vscode/
 *.tmp
 *.swp
+
+# git worktrees created inside this repo (paths must not be tracked)
+/rag-10m-research-v2-embed/
+/rag-10m-research-v2-graph/
+/rag-10m-research-v2-grounding/
+/rag-10m-research-v2-multihop/
