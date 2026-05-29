@@ -1,6 +1,6 @@
 ---
 name: rag-ingestion-pipeline
-description: Picks defaults for the offline indexing path of a production RAG system at 100k-100M document scale. Names ONE recommended choice per decision (chunk size, contextual augmentation, embedding model, dimensionality, vector index, hard-negatives, graph add-on) with the quantified rationale from primary sources (Anthropic Contextual Retrieval, NVIDIA TopK-PercPos, MSR GraphRAG, MTEB). Use when the user is designing or debugging RAG ingestion, asking about "chunking strategy", "contextual retrieval", "embedding model selection", "vector index" sizing, "HNSW vs IVF-PQ", "BM25 + dense" hybrid, "Anthropic contextual embeddings", "hard negatives" mining, "10M documents" scale, or "production RAG indexing". NOT for query-time retrieval, reranking, or generation logic — see rag-retrieval-rerank and rag-generation-guardrails. Defaults are calibrated for 10M docs / English-primary / faithfulness-gated workloads; escape hatches name the regime where each default flips.
+description: Picks defaults for the offline indexing path of a production RAG system at 100k-100M document scale. Names ONE recommended choice per decision (chunk size, contextual augmentation, embedding model, dimensionality, vector index, hard-negatives, graph add-on) with the quantified rationale from primary sources (Anthropic Contextual Retrieval, NVIDIA TopK-PercPos, MSR GraphRAG, MTEB). Use when the user is designing or debugging RAG ingestion, asking about "chunking strategy", "contextual retrieval", "embedding model selection", "vector index" sizing, "HNSW vs IVF-PQ", "BM25 + dense" hybrid, "Anthropic contextual embeddings", "hard negatives" mining, "10M documents" scale, or "production RAG indexing". NOT for query-time retrieval, reranking, or generation logic — see rag-retrieval-rerank, rag-grounded-generation, and rag-security-guardrails. Defaults are calibrated for 10M docs / English-primary / faithfulness-gated workloads; escape hatches name the regime where each default flips.
 ---
 
 ## When to use this skill
@@ -14,7 +14,7 @@ Read this skill when the user is designing or debugging the **offline indexing p
 - Deciding whether fine-tuning embeddings (and mining hard negatives) is worth the spend.
 - Deciding whether to layer a knowledge graph on top of vector retrieval.
 
-**NOT for** query-time retrieval logic, hybrid fusion weighting, reranker selection, or generator/guardrail design. Those belong to `rag-retrieval-rerank` and `rag-generation-guardrails` (sibling skills).
+**NOT for** query-time retrieval logic, hybrid fusion weighting, reranker selection, or generator/guardrail design. Those belong to `rag-retrieval-rerank`, `rag-grounded-generation`, and `rag-security-guardrails` (sibling skills).
 
 The skill names ONE default per decision with a numeric rationale. Escape hatches are named explicitly; absent the escape-hatch regime, the default wins.
 
