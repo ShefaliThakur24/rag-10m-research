@@ -1,0 +1,103 @@
+# Seed crawl list. Lanes start from these and follow leads they discover.
+# Each lane only consumes items in its scope (see lanes/<lane>/BRIEF.md).
+
+papers:
+  must_read:
+    - { url: "https://arxiv.org/abs/2005.11401", title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", tag: "rag-foundation" }
+    - { url: "https://arxiv.org/abs/2310.11511", title: "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection", tag: "self-reflection" }
+    - { url: "https://arxiv.org/abs/2305.18654", title: "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation", tag: "eval-faithfulness" }
+    - { url: "https://arxiv.org/abs/2404.16130", title: "From Local to Global: A Graph RAG Approach to Query-Focused Summarization", tag: "graphrag" }
+    - { url: "https://arxiv.org/abs/2112.09118", title: "ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction", tag: "late-interaction" }
+    - { url: "https://arxiv.org/abs/2401.18059", title: "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval", tag: "hierarchical" }
+    - { url: "https://arxiv.org/abs/2309.15217", title: "RAGAS: Automated Evaluation of Retrieval Augmented Generation", tag: "eval-framework" }
+    - { url: "https://arxiv.org/abs/2403.05676", title: "Searching for Best Practices in Retrieval-Augmented Generation", tag: "survey-best-practices" }
+    - { url: "https://arxiv.org/abs/2312.10997", title: "Retrieval-Augmented Generation for Large Language Models: A Survey", tag: "survey" }
+    - { url: "https://arxiv.org/abs/2407.01219", title: "Searching for Best Practices in Retrieval-Augmented Generation (extended)", tag: "survey-best-practices" }
+    - { url: "https://arxiv.org/abs/2406.14739", title: "Long-context LLMs Meet RAG", tag: "long-context-vs-rag" }
+    - { url: "https://arxiv.org/abs/2407.08223", title: "MemoRAG: Moving towards Next-Gen RAG via Memory-Inspired Knowledge Discovery", tag: "memory-rag" }
+    - { url: "https://arxiv.org/abs/2403.10131", title: "HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models", tag: "memory-graph" }
+    - { url: "https://arxiv.org/abs/2310.06825", title: "Mistral 7B (referenced for instruction-following baselines)", tag: "generation-model" }
+    - { url: "https://arxiv.org/abs/2402.03367", title: "DeepSeek LLM RAG eval", tag: "eval" }
+    - { url: "https://arxiv.org/abs/2304.06762", title: "REPLUG: Retrieval-Augmented Black-Box Language Models", tag: "blackbox-rag" }
+    - { url: "https://arxiv.org/abs/2305.14283", title: "Query Rewriting for Retrieval-Augmented Large Language Models", tag: "query-rewriting" }
+    - { url: "https://arxiv.org/abs/2307.03172", title: "Lost in the Middle: How Language Models Use Long Contexts", tag: "context-position" }
+    - { url: "https://arxiv.org/abs/2311.09210", title: "Chain-of-Verification Reduces Hallucination in Large Language Models", tag: "verification" }
+    - { url: "https://arxiv.org/abs/2402.10612", title: "FaithDial (faithfulness benchmark for dialog)", tag: "eval-faithfulness" }
+  arxiv_queries:
+    - "retrieval augmented generation faithfulness production"
+    - "RAG hallucination grounding citation"
+    - "long context retrieval reranking"
+    - "hybrid retrieval BM25 dense"
+    - "query rewriting decomposition RAG"
+    - "chunk size embedding retrieval"
+    - "approximate nearest neighbor billion scale"
+    - "embedding model benchmark MTEB"
+    - "cross-encoder reranker evaluation"
+    - "RAG evaluation framework"
+
+engineering:
+  vendor_blogs:
+    - { url: "https://www.anthropic.com/news/contextual-retrieval", title: "Anthropic: Introducing Contextual Retrieval", tag: "contextual-retrieval" }
+    - { url: "https://www.pinecone.io/learn/", title: "Pinecone Learn", tag: "vector-db" }
+    - { url: "https://blog.vespa.ai/", title: "Vespa engineering blog", tag: "search-engine" }
+    - { url: "https://qdrant.tech/articles/", title: "Qdrant articles", tag: "vector-db" }
+    - { url: "https://weaviate.io/blog", title: "Weaviate blog", tag: "vector-db" }
+    - { url: "https://www.databricks.com/blog/category/generative-ai", title: "Databricks Mosaic AI blog", tag: "platform" }
+    - { url: "https://cohere.com/blog", title: "Cohere blog (embed, rerank)", tag: "embedding-rerank" }
+    - { url: "https://www.elastic.co/search-labs", title: "Elastic Search Labs", tag: "hybrid-search" }
+    - { url: "https://github.blog/category/engineering/", title: "GitHub Engineering blog", tag: "production" }
+    - { url: "https://eng.uber.com/", title: "Uber Engineering", tag: "production" }
+    - { url: "https://netflixtechblog.com/", title: "Netflix Tech Blog", tag: "production" }
+    - { url: "https://engineering.linkedin.com/blog", title: "LinkedIn Engineering", tag: "production" }
+    - { url: "https://research.google/blog/", title: "Google Research blog", tag: "research" }
+    - { url: "https://aws.amazon.com/blogs/machine-learning/", title: "AWS ML blog", tag: "platform" }
+    - { url: "https://huggingface.co/blog", title: "Hugging Face blog", tag: "models" }
+    - { url: "https://www.llamaindex.ai/blog", title: "LlamaIndex blog", tag: "framework" }
+    - { url: "https://blog.langchain.dev/", title: "LangChain blog", tag: "framework" }
+    - { url: "https://blog.voyageai.com/", title: "Voyage AI blog", tag: "embedding" }
+  repos:
+    - { url: "https://github.com/explodinggradients/ragas", title: "RAGAS eval framework", tag: "eval" }
+    - { url: "https://github.com/truera/trulens", title: "TruLens", tag: "eval" }
+    - { url: "https://github.com/confident-ai/deepeval", title: "DeepEval", tag: "eval" }
+    - { url: "https://github.com/Arize-ai/phoenix", title: "Arize Phoenix", tag: "observability" }
+    - { url: "https://github.com/run-llama/llama_index", title: "LlamaIndex", tag: "framework" }
+    - { url: "https://github.com/langchain-ai/langchain", title: "LangChain", tag: "framework" }
+    - { url: "https://github.com/microsoft/graphrag", title: "Microsoft GraphRAG", tag: "graphrag" }
+    - { url: "https://github.com/stanford-futuredata/ColBERT", title: "ColBERT", tag: "late-interaction" }
+    - { url: "https://github.com/facebookresearch/faiss", title: "FAISS", tag: "ann-library" }
+    - { url: "https://github.com/qdrant/qdrant", title: "Qdrant", tag: "vector-db" }
+    - { url: "https://github.com/weaviate/weaviate", title: "Weaviate", tag: "vector-db" }
+    - { url: "https://github.com/milvus-io/milvus", title: "Milvus", tag: "vector-db" }
+    - { url: "https://github.com/vespa-engine/vespa", title: "Vespa", tag: "search-engine" }
+    - { url: "https://github.com/pgvector/pgvector", title: "pgvector", tag: "vector-db" }
+    - { url: "https://github.com/lancedb/lancedb", title: "LanceDB", tag: "vector-db" }
+    - { url: "https://github.com/google-research/google-research/tree/master/scann", title: "ScaNN", tag: "ann-library" }
+    - { url: "https://github.com/jina-ai/jina", title: "Jina", tag: "framework" }
+    - { url: "https://github.com/embeddings-benchmark/mteb", title: "MTEB benchmark", tag: "eval-embedding" }
+    - { url: "https://github.com/FlagOpen/FlagEmbedding", title: "BGE / FlagEmbedding", tag: "embedding" }
+  case_studies:
+    - { url: "https://www.glean.com/blog", title: "Glean engineering posts (enterprise search)", tag: "enterprise" }
+    - { url: "https://www.notion.so/blog", title: "Notion AI design notes", tag: "product" }
+    - { url: "https://www.perplexity.ai/hub/blog", title: "Perplexity engineering", tag: "search-llm" }
+    - { url: "https://you.com/articles", title: "You.com blog", tag: "search-llm" }
+    - { url: "https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/", title: "BloombergGPT", tag: "domain-specific" }
+    - { url: "https://github.blog/news-insights/product-news/the-architecture-behind-github-copilot-x/", title: "GitHub Copilot retrieval", tag: "code-rag" }
+
+community:
+  reddit_seeds:
+    - { url: "https://www.reddit.com/r/LocalLLaMA/top/.json?t=year&limit=100", title: "r/LocalLLaMA top year", tag: "community" }
+    - { url: "https://www.reddit.com/r/MachineLearning/search.json?q=RAG&restrict_sr=1&sort=top&t=year", title: "r/MachineLearning RAG top year", tag: "community" }
+    - { url: "https://www.reddit.com/r/LangChain/top/.json?t=year&limit=100", title: "r/LangChain top year", tag: "framework" }
+    - { url: "https://www.reddit.com/r/Rag/top/.json?t=year&limit=100", title: "r/Rag top year", tag: "community" }
+  hn_queries:
+    - { url: "https://hn.algolia.com/api/v1/search?query=RAG+hallucination&tags=story", title: "HN: RAG hallucination", tag: "hn" }
+    - { url: "https://hn.algolia.com/api/v1/search?query=vector+database+production&tags=story", title: "HN: vector DB production", tag: "hn" }
+    - { url: "https://hn.algolia.com/api/v1/search?query=embedding+model+benchmark&tags=story", title: "HN: embedding model benchmark", tag: "hn" }
+    - { url: "https://hn.algolia.com/api/v1/search?query=reranking+retrieval&tags=story", title: "HN: reranking retrieval", tag: "hn" }
+  individual_blogs:
+    - { url: "https://eugeneyan.com/writing/", title: "Eugene Yan writing (rec + RAG patterns)", tag: "individual" }
+    - { url: "https://hamel.dev/", title: "Hamel Husain blog (eval + RAG)", tag: "individual" }
+    - { url: "https://www.philschmid.de/", title: "Phil Schmid blog (LLM systems)", tag: "individual" }
+    - { url: "https://simonwillison.net/", title: "Simon Willison weblog", tag: "individual" }
+    - { url: "https://jxnl.co/", title: "Jason Liu (instructor + RAG)", tag: "individual" }
+    - { url: "https://www.douwekiela.com/", title: "Douwe Kiela (RAG co-author)", tag: "individual" }
